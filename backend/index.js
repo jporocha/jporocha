@@ -1,12 +1,9 @@
-require('dotenv/config')
-require('./db/mongoose')
+const result = require('dotenv').config({ path: './.env' })
+if (result.error) console.log('Production mode (No env vars from .env file)')
 
-const express = require('express')
-const app = express()
-const port = process.env.PORT
+const mongoose = require('./db/mongoose.js')
+const app = require('./app.js')
 
-app.use('/', express.static('frontend/dist'))
+const port = process.env.PORT || 3000
 
-app.listen(port, () => {
-  console.log(`Server is up on port ${port}.`)
-})
+app.listen(port, () => console.log(`Server is up on port: ${port}`))
