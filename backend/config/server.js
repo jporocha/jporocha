@@ -13,7 +13,6 @@ server.use(helmet())
 server.use(compression())
 server.use(express.json())
 
-server.use('/', express.static('./frontend/dist'))
 server.use('/api', require('../routes/api.js'));
 
 module.exports = server

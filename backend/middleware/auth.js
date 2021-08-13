@@ -13,7 +13,6 @@ module.exports = function(roles = {isAdmin: false}) {
     const tokenData = User.verifyToken(token)
     if (!tokenData) return res.status(401).send('Token Expirado ou inválido')
 
-
     if (isAdminRequired && !tokenData.isAdmin) return res.status(403).send('Você não tem permissão para acessar essa rota')   
 
     next()

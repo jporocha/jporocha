@@ -1,22 +1,14 @@
-const app = require('../config/server.js')
+const app = require('../../backend/config/server')
 const supertest = require('supertest')
 const request = supertest(app)
 const { setupDB } = require('./test-setup')
 
-let userWasCreated = false
-
 const databaseName = "testEnvironment"
+
 setupDB(databaseName)
 
 it("Testing JEST", () => {
     expect(1).toBe(1)
-})
-
-it("Async testing", async done => {
-    setTimeout(() => {
-        expect(1).toBe(1)
-        done()
-    }, 100)
 })
 
 it("Testing Hello World", async done => {
@@ -26,30 +18,35 @@ it("Testing Hello World", async done => {
 })
 
 it("Testing create user", async done => {
-    const res = await request.post("/api/users/").send({
+    const res = await request.post("/api/users/createUser").send({
         name: 'João Paulo Rocha',
         email: 'jporocha@gmail.com',
         password: 'testeDePass',
         role: 'Admin'
     })
-    let statusCode = userWasCreated ? 400 : 201
-    userWasCreated = true
-    expect(res.status).toBe(statusCode)
-    console.log('Resposta:', res.body)
+    expect(res.statusCode).toBe(201)
     done()
 })
 
-it("Testing create user", async done => {
+it("Testing create second user", async done => {
+    const res = await request.post("/api/users/createUser").send({
+        name: 'João Paulo Rocha',
+        email: 'jporocha@globo.com',
+        password: 'testeDePassword',
+        role: 'Admin'
+    })
+    expect(res.statusCode).toBe(201)
+    done()
+})
+
+it("Testing create user already in DB", async done => {
     const res = await request.post("/api/users/").send({
         name: 'João Paulo Rocha',
         email: 'jporocha@gmail.com',
         password: 'testeDePass',
         role: 'Admin'
     })
-    let statusCode = userWasCreated ? 400 : 201
-    userWasCreated = true
-    expect(res.status).toBe(statusCode)
-    console.log('Resposta:', res.body)
+    expect(res.statusCode).toBe(404)
     done()
 })
 
@@ -58,7 +55,6 @@ it("Testing login", async done => {
         email: 'jporocha@gmail.com',
         password: 'testeDePass'
     })
-    expect(res.status).toBe(200)
-    console.log('Resposta:', res.body)
+    expect(res.statusCode).toBe(201)
     done()
 })
