@@ -1,5 +1,24 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
+  <div>
+    <v-btn @click='fetchData'>Teste</v-btn>
   </div>
 </template>
+
+<script>
+import axios from 'axios'
+  export default {
+    methods: {
+      fetchData() {
+        axios.get('/test').then((res) => {
+          console.log(res)
+        }).catch((err) => {
+          console.log(err)
+        })
+      }
+    },
+  }
+</script>
+
+<style scoped>
+
+</style>

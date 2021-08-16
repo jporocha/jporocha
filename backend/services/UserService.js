@@ -27,9 +27,9 @@ module.exports = class UserService {
 
   static async SignIn(user) {
     let response = await User.validateLogin(user)
-    if (response.token) {
+    if (response.user) {
       return {
-      payload: response.token,
+      payload: response.user,
       statusCode: 201
       }
     } else {
