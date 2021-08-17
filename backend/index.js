@@ -15,6 +15,6 @@ const port = process.env.PORT || 443;
 
 let httpsServer = https.createServer(credentials, server);
 
-httpsServer.listen(port, () => {
+server.listen(port, () => {
   console.log(`Server is up on port ${port}.`);
 });
