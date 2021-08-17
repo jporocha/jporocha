@@ -3,10 +3,10 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import vuetify from "./plugins/vuetify";
-import axios from 'axios'
+import axios from "axios";
 
-axios.defaults.baseURL = "http://localhost/api"
-axios.defaults.withCredentials = true
+axios.defaults.baseURL = process.env.VUE_APP_SERVER;
+axios.defaults.withCredentials = true;
 
 Vue.config.productionTip = false;
 

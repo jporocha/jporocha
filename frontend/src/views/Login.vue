@@ -1,13 +1,15 @@
 <template>
-  <v-container fluid class="d-flex fill-height justify-center align-center">
-    <v-spacer></v-spacer>
-    <v-card class="ma-2 pa-5" max-width="400px">
-      <v-row class="justify-center mx-auto mt-5">
-        Já possui uma conta? Entre com seus dados:
-      </v-row>
-      <v-row class="justify-center mx-auto my-5">
+  <v-container
+    fluid
+    class="d-flex fill-height justify-center align-center cardBG"
+    ><v-spacer></v-spacer>
+    <v-card class="pa-2" width="300px">
+      <v-card-title class="d-flex justify-center"> Login </v-card-title>
+      <v-divider></v-divider>
+      <v-card-text>
         <v-form ref="form" v-model="valid" lazy-validation>
           <v-text-field
+            prepend-icon="mdi-email-outline"
             v-model="email"
             label="E-mail"
             required
@@ -15,6 +17,8 @@
             dense
           ></v-text-field>
           <v-text-field
+            prepend-icon="mdi-account-key-outline"
+            append-icon="mdi-eye-off-outline"
             v-model="password"
             label="Senha"
             required
@@ -22,22 +26,28 @@
             outlined
             dense
           ></v-text-field>
-          <v-row class="justify-center mx-auto my-1">
-            <v-btn small>Entrar</v-btn>
-          </v-row>
+          <div class="d-flex justify-center">
+            <v-btn min-width="150px" small>Entrar</v-btn>
+          </div>
         </v-form>
-      </v-row>
+      </v-card-text>
       <v-divider></v-divider>
-      <v-row class="justify-center mx-5 mt-5">
-        <v-btn
-          small
-          color="blue"
-          width="200"
-          @click="Login"
-          class="blue white--text"
-          >Entrar com o Facebook</v-btn
-        >
-      </v-row>
+      <div class="mx-2 my-5 d-flex align-center">
+        <v-row class="d-flex justify-center">
+          <v-col cols="12" class="d-flex caption justify-center text-center">
+            Não tem cadastro? Registre-se aqui. <br />
+            Ou, se preferir...
+          </v-col>
+          <v-btn
+            small
+            color="blue"
+            width="230"
+            @click="Login"
+            class="blue darken-2 white--text"
+            ><v-icon class="mx-1">mdi-facebook</v-icon> Entrar com o Facebook
+          </v-btn>
+        </v-row>
+      </div>
     </v-card>
     <v-spacer></v-spacer>
   </v-container>
@@ -54,11 +64,14 @@ export default {
   },
   methods: {
     Login() {
-      window.location = "http://localhost/api/auth/facebook";
+      window.location = `${process.env.VUE_APP_SERVER}/auth/facebook`;
     },
   },
 };
 </script>
 
 <style scoped>
+.link {
+  cursor: pointer;
+}
 </style>
