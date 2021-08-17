@@ -32,6 +32,8 @@ server.use(
   })
 );
 
+if (result.error) server.enable("trust proxy");
+
 server.use(passport.initialize());
 server.use(passport.session());
 server.use(helmet());
