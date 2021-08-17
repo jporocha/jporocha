@@ -32,7 +32,7 @@ server.use(
   })
 );
 
-if (result.error) server.enable("trust proxy");
+server.enable("trust proxy");
 
 server.use(passport.initialize());
 server.use(passport.session());
