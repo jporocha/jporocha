@@ -11,7 +11,7 @@ const credentials = {
   cert: certificate,
 };
 
-const port = process.env.PORT || 443;
+const port = process.env.PORT || 80;
 
 let httpsServer = https.createServer(credentials, server);
 
