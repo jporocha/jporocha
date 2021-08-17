@@ -1,8 +1,20 @@
-const server = require('./config/server.js')
-const mongoose = require('./db/mongoose.js')
+const server = require("./config/server.js");
+const mongoose = require("./db/mongoose.js");
 
-const port = process.env.PORT || 80
+const fs = require("fs");
+const https = require("https");
+const privateKey = fs.readFileSync("./key.pem");
+const certificate = fs.readFileSync("./cert.pem");
 
-server.listen(port, () => {
-  console.log(`Server is up on port ${port}.`)
-})
+const credentials = {
+  key: privateKey,
+  cert: certificate,
+};
+
+const port = process.env.PORT || 443;
+
+let httpsServer = https.createServer(credentials, server);
+
+httpsServer.listen(port, () => {
+  console.log(`Server is up on port ${port}.`);
+});
