@@ -6,7 +6,6 @@ const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const passport = require("passport");
-const address = process.env.REDIRECT;
 
 const server = express();
 
@@ -28,7 +27,7 @@ server.use(
 );
 server.use(
   cors({
-    origin: address,
+    origin: `${process.env.CORS}`,
     credentials: true,
   })
 );

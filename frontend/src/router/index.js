@@ -21,7 +21,7 @@ const routes = [
     component: Dashboard,
     beforeEnter: (to, from, next) => {
       axios
-        .get("/auth/user")
+        .get("auth/user")
         .then((res) => {
           console.log(res.data);
           if (res.data.id) {

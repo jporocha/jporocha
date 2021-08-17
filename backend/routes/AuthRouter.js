@@ -22,6 +22,7 @@ router.get("/logout", (req, res) => {
 });
 
 router.get("/user", (req, res) => {
+  console.log("Fetching user:", req.user);
   res.status(200).send(req.user);
 });
 
