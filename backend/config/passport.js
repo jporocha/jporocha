@@ -47,8 +47,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_APP_ID,
       clientSecret: process.env.GOOGLE_APP_SECRET,
-      callbackURL: process.env.GOOGLE_CALLBACK,
-      proxy: true,
+      callbackURL: `${process.env.GOOGLE_CALLBACK}`,
     },
     function (accessToken, refreshToken, profile, cb) {
       console.log("AT:", accessToken);
