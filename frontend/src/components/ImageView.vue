@@ -1,6 +1,10 @@
 <template>
   <v-col class="col-md-12 col-lg-6" v-intersect="onIntersect">
-    <v-img :class="currentClass" :src="require(`@/assets/${imgName}`)"></v-img>
+    <v-img
+      max-width="600px"
+      :class="currentClass"
+      :src="require(`@/assets/${imgName}`)"
+    ></v-img>
   </v-col>
 </template>
 

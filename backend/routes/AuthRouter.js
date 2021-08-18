@@ -16,6 +16,19 @@ router.get(
   })
 );
 
+router.get(
+  "/google",
+  passport.authenticate("google", { scope: ["profile", "email"] })
+);
+
+router.get(
+  "/google/callback",
+  passport.authenticate("google", {
+    failureRedirect: `${address}/login`,
+    successRedirect: `${address}/dashboard`,
+  })
+);
+
 router.get("/logout", (req, res) => {
   req.logout();
   res.status(200).send("User has logged out...");

@@ -39,12 +39,21 @@
             Ou, se preferir...
           </v-col>
           <v-btn
+            disabled
             small
             color="blue"
             width="230"
-            @click="Login"
-            class="blue darken-2 white--text"
+            @click="FacebookLogin"
+            class="darken-2 white--text"
             ><v-icon class="mx-1">mdi-facebook</v-icon> Entrar com o Facebook
+          </v-btn>
+          <v-btn
+            small
+            color="red darken-1 mt-2"
+            width="230"
+            @click="GoogleLogin"
+            class="white--text"
+            ><v-icon small class="mx-1">mdi-google</v-icon> Entrar com o Google
           </v-btn>
         </v-row>
       </div>
@@ -63,8 +72,11 @@ export default {
     };
   },
   methods: {
-    Login() {
+    FacebookLogin() {
       window.location = `${process.env.VUE_APP_SERVER}/auth/facebook`;
+    },
+    GoogleLogin() {
+      window.location = `${process.env.VUE_APP_SERVER}/auth/google`;
     },
   },
 };
