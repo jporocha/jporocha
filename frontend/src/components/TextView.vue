@@ -21,7 +21,9 @@ export default {
   },
   computed: {
     currentClass() {
-      return this.isIntersecting ? "square square-transition" : "square";
+      return this.isIntersecting
+        ? "square square-transition text-justify"
+        : "square text-justify";
     },
   },
   methods: {

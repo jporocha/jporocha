@@ -1,7 +1,10 @@
 <template>
   <div class="mt-2">
     <v-row class="d-flex justify-center">
-      <image-view imgName="logo.png" />
+      <image-view
+        imgName="logo.png"
+        imgcols="col-md-12 d-flex justify-center"
+      />
     </v-row>
 
     <v-row>
@@ -18,17 +21,22 @@
       </v-col>
       <v-col cols="2"></v-col>
     </v-row>
+    <v-row class="black d-flex justify-center mt-2">
+      <BottomBar />
+    </v-row>
   </div>
 </template>
 
 <script>
 import ImageView from "@/components/ImageView";
 import TextView from "@/components/TextView";
+import BottomBar from "@/components/Bottombar";
 
 export default {
   components: {
     ImageView,
     TextView,
+    BottomBar,
   },
   data() {
     return {

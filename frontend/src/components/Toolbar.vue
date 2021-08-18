@@ -7,7 +7,7 @@
       max-width="40"
       class="mr-2"
     ></v-img>
-    <div @click="goHome" class="logo">NeoMecânica</div>
+    <div @click="goHome" class="logo">NeoMecanica</div>
     <v-spacer></v-spacer>
     <Avatar />
   </v-container>

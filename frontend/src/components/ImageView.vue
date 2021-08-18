@@ -1,5 +1,5 @@
 <template>
-  <v-col class="col-md-12 col-lg-6" v-intersect="onIntersect">
+  <v-col :class="imgClass" v-intersect="onIntersect">
     <v-img
       max-width="600px"
       :class="currentClass"
@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  props: ["imgName"],
+  props: ["imgName", "imgcols"],
   data() {
     return {
       isIntersecting: false,
@@ -19,6 +19,9 @@ export default {
   computed: {
     currentClass() {
       return this.isIntersecting ? "square square-transition" : "square";
+    },
+    imgClass() {
+      return this.imgcols ? this.imgcols : "col-md-12 col-lg-6";
     },
   },
   methods: {

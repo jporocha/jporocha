@@ -39,6 +39,7 @@
             Ou, se preferir...
           </v-col>
           <v-btn
+            disabled
             small
             color="blue"
             width="230"

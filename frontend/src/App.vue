@@ -11,10 +11,25 @@
 
 <script>
 import Toolbar from "@/components/Toolbar";
+import axios from "axios";
 
 export default {
   components: {
     Toolbar,
+  },
+  mounted() {
+    axios
+      .get("auth/user")
+      .then((res) => {
+        if (res.data.id) {
+          this.$store.dispatch("setUser", res.data);
+        } else {
+          this.$router.push({ name: "Home" });
+        }
+      })
+      .catch(() => {
+        this.$router.push({ name: "Home" });
+      });
   },
 };
 </script>
