@@ -46,6 +46,9 @@ passport.use(
       callbackURL: process.env.GOOGLE_CALLBACK,
     },
     function (accessToken, refreshToken, profile, cb) {
+      console.log("AT:", accessToken);
+      console.log("RT:", refreshToken);
+      console.log("Profile:", profile);
       User.FindOrCreateUser({
         name: profile.displayName,
         googleId: profile.id,
