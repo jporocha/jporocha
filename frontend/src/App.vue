@@ -6,18 +6,22 @@
     <v-main>
       <router-view />
     </v-main>
+    <vtoast ref="vtoast" />
   </v-app>
 </template>
 
 <script>
 import Toolbar from "@/components/Toolbar";
+import vtoast from "@/helpers/vtoast";
 import axios from "axios";
 
 export default {
   components: {
     Toolbar,
+    vtoast,
   },
   mounted() {
+    this.$root.vtoast = this.$refs.vtoast;
     axios
       .get("auth/user")
       .then((res) => {

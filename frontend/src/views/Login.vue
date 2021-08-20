@@ -3,72 +3,36 @@
     fluid
     class="d-flex fill-height justify-center align-center cardBG"
     ><v-spacer></v-spacer>
-    <v-card class="pa-2" width="300px">
-      <v-card-title class="d-flex justify-center"> Login </v-card-title>
-      <v-divider></v-divider>
-      <v-card-text>
-        <v-form ref="form" v-model="valid" lazy-validation>
-          <v-text-field
-            prepend-icon="mdi-email-outline"
-            v-model="email"
-            label="E-mail"
-            required
-            outlined
-            dense
-          ></v-text-field>
-          <v-text-field
-            prepend-icon="mdi-account-key-outline"
-            append-icon="mdi-eye-off-outline"
-            v-model="password"
-            label="Senha"
-            required
-            type="password"
-            outlined
-            dense
-          ></v-text-field>
-          <div class="d-flex justify-center">
-            <v-btn min-width="150px" small>Entrar</v-btn>
-          </div>
-        </v-form>
-      </v-card-text>
-      <v-divider></v-divider>
-      <div class="mx-2 my-5 d-flex align-center">
-        <v-row class="d-flex justify-center">
-          <v-col cols="12" class="d-flex caption justify-center text-center">
-            Não tem cadastro? Registre-se aqui. <br />
-            Ou, se preferir...
-          </v-col>
-          <v-btn
-            disabled
-            small
-            color="blue"
-            width="230"
-            @click="FacebookLogin"
-            class="darken-2 white--text"
-            ><v-icon class="mx-1">mdi-facebook</v-icon> Entrar com o Facebook
-          </v-btn>
-          <v-btn
-            small
-            color="red darken-1 mt-2"
-            width="230"
-            @click="GoogleLogin"
-            class="white--text"
-            ><v-icon small class="mx-1">mdi-google</v-icon> Entrar com o Google
-          </v-btn>
-        </v-row>
-      </div>
-    </v-card>
+    <transition name="rotate" mode="out-in">
+      <LoginCard
+        v-on:Register="changeToRegister"
+        v-on:ForgotPass="changeToPass"
+        v-if="modo === 1"
+      />
+      <RegisterCard v-on:Login="changeToLogin" v-else-if="modo === 2" />
+      <ForgotPass v-on:Login="changeToLogin" v-else-if="modo === 3" />
+    </transition>
     <v-spacer></v-spacer>
   </v-container>
 </template>
 
 <script>
+import LoginCard from "@/components/LoginCard";
+import ForgotPass from "@/components/ForgotPass";
+import RegisterCard from "@/components/RegisterCard";
+
 export default {
+  components: {
+    LoginCard,
+    ForgotPass,
+    RegisterCard,
+  },
   data() {
     return {
       email: "",
       password: "",
       valid: null,
+      modo: 1,
     };
   },
   methods: {
@@ -78,6 +42,15 @@ export default {
     GoogleLogin() {
       window.location = `${process.env.VUE_APP_SERVER}/auth/google`;
     },
+    changeToPass() {
+      this.modo = 3;
+    },
+    changeToRegister() {
+      this.modo = 2;
+    },
+    changeToLogin() {
+      this.modo = 1;
+    },
   },
 };
 </script>
@@ -85,5 +58,37 @@ export default {
 <style scoped>
 .link {
   cursor: pointer;
+  color: darkblue;
+  display: block;
+}
+
+@keyframes rotateIn {
+  0% {
+    opacity: 1;
+    transform: perspective(30cm) rotateY(90deg);
+  }
+  100% {
+    opacity: 1;
+    transform: perspective(30cm) rotateY(0deg);
+  }
+}
+
+@keyframes rotateOut {
+  0% {
+    opacity: 1;
+    transform: perspective(30cm) rotateY(-90deg);
+  }
+  100% {
+    opacity: 1;
+    transform: perspective(30cm) rotateY(0deg);
+  }
+}
+
+.rotate-enter-active {
+  animation: rotateIn 0.5s;
+}
+
+.rotate-leave-active {
+  animation: rotateOut 0.5s reverse;
 }
 </style>

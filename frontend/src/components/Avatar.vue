@@ -4,8 +4,10 @@
       <v-menu bottom min-width="200px" rounded offset-y>
         <template v-slot:activator="{ on }">
           <v-btn icon x-large v-on="on">
-            <v-avatar color="blue darken-4" size="36">
-              <span class="white--text text-h5">J</span>
+            <v-avatar color="blue darken-4" size="30">
+              <span class="white--text text-h6">{{
+                isLogged.nome.charAt(0)
+              }}</span>
             </v-avatar>
           </v-btn>
         </template>
@@ -50,7 +52,7 @@ export default {
           this.$router.push("/");
         })
         .catch((err) => {
-          console.log(err);
+          console.log("Falha no Avatar:", err);
         });
     },
     clientArea() {
@@ -59,6 +61,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-</style>

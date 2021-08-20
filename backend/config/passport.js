@@ -6,14 +6,10 @@ const UserModel = require("../models/UserModel");
 const User = new UserModel();
 
 passport.serializeUser(function (user, done) {
-  console.log("Serialize");
-  console.log(user);
   done(null, { id: user._id, nome: user.name, acesso: user.role });
 });
 
 passport.deserializeUser(function (user, done) {
-  console.log("Deserialize");
-  console.log(user);
   done(null, user);
 });
 
@@ -26,14 +22,19 @@ passport.use(
       profileFields: ["id", "email", "name"],
     },
     function (accessToken, refreshToken, profile, cb) {
-      User.FindOrCreateUser({
-        name: `${profile._json.first_name} ${profile._json.last_name}`,
-        facebookId: profile._json.id,
-        email: profile._json.email,
-      })
+      User.FindOrCreateUser(
+        {
+          name: `${profile._json.first_name} ${profile._json.last_name}`,
+          facebookId: profile._json.id,
+          email: profile._json.email,
+        },
+        {
+          facebookId: profile._json.id,
+        }
+      )
         .then((res) => {
           if (res.user) return cb(null, res.user);
-          throw new Error(res.error);
+          throw res.error;
         })
         .catch((err) => {
           return cb(err, null);
@@ -50,17 +51,17 @@ passport.use(
       callbackURL: `${process.env.GOOGLE_CALLBACK}`,
     },
     function (accessToken, refreshToken, profile, cb) {
-      console.log("AT:", accessToken);
-      console.log("RT:", refreshToken);
-      console.log("Profile:", profile);
-      User.FindOrCreateUser({
-        name: profile.displayName,
-        googleId: profile.id,
-        email: profile._json.email,
-      })
+      User.FindOrCreateUser(
+        {
+          name: profile.displayName,
+          googleId: profile.id,
+          email: profile._json.email,
+        },
+        { googleId: profile.id }
+      )
         .then((res) => {
           if (res.user) return cb(null, res.user);
-          throw new Error(res.error);
+          throw res.error;
         })
         .catch((err) => {
           return cb(err, null);
@@ -78,7 +79,7 @@ passport.use(
     User.validateLogin(user)
       .then((res) => {
         if (res.user) return cb(null, res.user);
-        throw new Error(res.error);
+        throw res.error;
       })
       .catch((err) => {
         return cb(err, null);

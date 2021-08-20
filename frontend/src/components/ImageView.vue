@@ -1,8 +1,7 @@
 <template>
   <v-col :class="imgClass" v-intersect="onIntersect">
     <v-img
-      max-width="600px"
-      :class="currentClass"
+      :class="`${currentClass} imgSize`"
       :src="require(`@/assets/${imgName}`)"
     ></v-img>
   </v-col>
@@ -47,5 +46,9 @@ export default {
 .square-transition {
   opacity: 1;
   transform: none;
+}
+
+.imgSize {
+  max-width: calc(min(90vw, 500px));
 }
 </style>

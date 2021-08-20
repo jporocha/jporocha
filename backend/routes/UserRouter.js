@@ -1,34 +1,44 @@
 // /api/users/
 
-const UserService = require("../services/UserService")
-const express = require('express')
-const router = express.Router()
+const UserService = require("../services/UserService");
+const express = require("express");
+const router = express.Router();
 
-router.post('/createUser', async (req, res) => {
+router.post("/createUser", async (req, res) => {
+  const { name, email, password } = req.body;
 
-  const { name, email, password } = req.body
-
-  if (!name || !email || !password) return res.status(400).send({ erro: 'Dados incompletos' })
+  if (!name || !email || !password)
+    return res.status(400).send({ erro: "Dados incompletos" });
 
   const newUser = {
     name,
     email,
-    password
-  }
+    password,
+    localStrategy: true,
+  };
 
-  let response = await UserService.CreateUser(newUser)
-  res.status(response.statusCode).send(response.payload)
-})
+  let response = await UserService.CreateUser(newUser);
+  res.status(response.statusCode).send(response.payload);
+});
 
-router.post('/login', async (req, res) => {
-  const { email, password } = req.body
+router.post("/recoverPassword", async (req, res) => {
+  const { email } = req.body;
 
-  if (!email || !password) return res.status(400).send({ erro: 'Dados incompletos' }) 
-  
-  const userData = {email, password}
+  if (!email) return res.status(400).send({ erro: "Dados incompletos" });
 
-  let response = await UserService.SignIn(userData)
-  res.status(response.statusCode).send(response.payload)
-})
+  let response = await UserService.RecoverPassword(email);
+  res.status(response.statusCode).send(response.payload);
+});
 
-module.exports = router
+router.post("/resetPassword", async (req, res) => {
+  const { email, token, password } = req.body;
+
+  if (!token || !password || !email)
+    return res.status(400).send({ erro: "Dados incompletos" });
+
+  let response = await UserService.ResetPassword(email, token, password);
+
+  res.status(response.statusCode).send(response.payload);
+});
+
+module.exports = router;

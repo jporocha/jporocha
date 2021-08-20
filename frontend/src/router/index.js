@@ -23,10 +23,8 @@ const routes = [
       axios
         .get("auth/user")
         .then((res) => {
-          console.log(res.data);
           if (res.data.id) {
             store.state.user = res.data;
-            console.log(store.state);
             next();
           } else {
             next({ name: "Login" });
