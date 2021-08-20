@@ -50,14 +50,14 @@
         <div class="d-flex caption justify-center text-center mb-3">
           Ou, se preferir...
         </div>
-        <v-btn
+        <!--         <v-btn
           small
           color="blue"
           width="230"
           @click="FacebookLogin"
           class="darken-2 white--text mb-2"
           ><v-icon class="mx-1">mdi-facebook</v-icon> Entrar com o Facebook
-        </v-btn>
+        </v-btn> -->
         <v-btn
           small
           color="red darken-1"
