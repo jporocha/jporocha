@@ -18,7 +18,7 @@ let userSchema = new mongoose.Schema({
   facebookId: { type: Number, required: false },
   googleId: { type: Number, required: false },
   localStrategy: { type: Boolean, default: false },
-  refreshPassToken: { type: String, default: "" },
+  refreshPassToken: { type: String },
 });
 
 // Para registro de estratégia local
@@ -93,12 +93,10 @@ userSchema.methods.changePassword = async function (id, token, newPass) {
   try {
     let userExists = await mongoose.model("User").findById(id);
     if (!userExists) throw "Usuário não encontrado";
-    if (
-      userExists.refreshPassToken != token ||
-      userExists.refreshPassToken === ""
-    )
+    if (!userExists.refreshPassToken || userExists.refreshPassToken != token)
       throw "Token inválido";
     userExists.passwordHash = await bcrypt.hash(newPass + pepper, 8);
+    userExists.refreshPassToken = undefined;
     await userExists.save();
     return { msg: "Senha alterada com sucesso." };
   } catch (e) {
