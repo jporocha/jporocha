@@ -9,14 +9,21 @@
       </v-card-text>
       <v-divider></v-divider>
       <v-card-actions class="justify-end my-2">
-        <v-btn small>Solicitar novo orçamento</v-btn>
+        <v-btn small text @click="newRequest"> Solicitar novo orçamento </v-btn>
       </v-card-actions>
+      <router-view></router-view>
     </v-card>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    newRequest() {
+      this.$router.push("dashboard/pedido");
+    },
+  },
+};
 </script>
 
 <style scoped>

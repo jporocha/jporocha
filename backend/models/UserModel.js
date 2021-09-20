@@ -14,6 +14,15 @@ let userSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: false, lowercase: true },
   role: { type: Array, default: ["cliente"] },
+  address: [
+    {
+      name: String,
+      location: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Address",
+      },
+    },
+  ],
   passwordHash: { type: String, required: false },
   facebookId: { type: Number, required: false },
   googleId: { type: Number, required: false },
@@ -76,7 +85,6 @@ userSchema.methods.createToken = async function (id) {
     userExists.refreshPassToken = crypto.randomBytes(20).toString("hex");
     await userExists.save();
     await mailer(
-      "Neomecânica",
       userExists.email,
       "Seu token para recuperação de senha",
       userExists.refreshPassToken,

@@ -17,14 +17,19 @@ transporter
   .then(console.log("Conectado ao servidor de e-mails..."))
   .catch(console.error);
 
-async function main(from, to, subject, text, html) {
-  let info = await transporter.sendMail({
-    from,
-    to,
-    subject,
-    text,
-    html,
-  });
+async function main(to, subject, text, html) {
+  try {
+    let info = await transporter.sendMail({
+      from: "Neomecânica <neomecanicaengenharia@gmail.com>",
+      to,
+      subject,
+      text,
+      html,
+    });
+    return info;
+  } catch (e) {
+    return { erro: e };
+  }
 }
 
 module.exports = main;

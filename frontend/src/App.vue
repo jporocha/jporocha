@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-app-bar class="appBar" dark app>
-      <toolbar fluid />
+      <Header />
     </v-app-bar>
     <v-main>
       <router-view />
@@ -11,13 +11,13 @@
 </template>
 
 <script>
-import Toolbar from "@/components/Toolbar";
+import Header from "@/components/UI/Header";
 import vtoast from "@/helpers/vtoast";
 import axios from "axios";
 
 export default {
   components: {
-    Toolbar,
+    Header,
     vtoast,
   },
   mounted() {
@@ -45,27 +45,27 @@ export default {
 }
 
 .appBar {
-  background: rgb(11, 5, 0);
+  background: var(--v-primary-base);
   background: linear-gradient(
     90deg,
-    rgba(0, 0, 0, 1) 0%,
-    rgba(44, 87, 132, 1) 100%
+    var(--v-primary-base),
+    var(--v-color4-base)
   );
 }
 
 .cardBG {
-  background: #307351; /* fallback for old browsers */
+  background: var(--v-fourth-base);
   background: -webkit-linear-gradient(
     22deg,
-    #626d58,
-    #307351,
-    #aad2ba
-  ); /* Chrome 10-25, Safari 5.1-6 */
+    var(--v-color3-base),
+    var(--v-color2-base),
+    var(--v-color4-base)
+  );
   background: linear-gradient(
     22deg,
-    #626d58,
-    #307351,
-    #aad2ba
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    var(--v-color3-base),
+    var(--v-color2-base),
+    var(--v-color4-base)
+  );
 }
 </style>

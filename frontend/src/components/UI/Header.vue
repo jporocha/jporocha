@@ -2,6 +2,7 @@
   <v-container fluid class="d-flex align-center mx-0">
     <v-spacer></v-spacer>
     <v-img
+      @click="goHome"
       src="@/assets/nlogo.png"
       :aspect-ratio="1 / 1"
       max-width="40"

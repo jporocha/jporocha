@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex text-center align-center white--text my-2 overline">
+  <div class="text-center align-center overline primary white--text">
     Neomecanica - Escritório de Engenharia <br />
     R. Marquês de Herval, 90 - Valongo<br />
     Santos - SP<br />

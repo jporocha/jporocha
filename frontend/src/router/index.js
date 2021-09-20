@@ -3,8 +3,9 @@ import VueRouter from "vue-router";
 import store from "../store/index";
 import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
-import Register from "../views/Register.vue";
 import Dashboard from "../views/Dashboard.vue";
+import NewRequest from "@/components/Request/RequestForm";
+import NotFound from "../views/NotFound.vue";
 import axios from "axios";
 
 Vue.use(VueRouter);
@@ -34,6 +35,12 @@ const routes = [
           next({ name: "Login" });
         });
     },
+    children: [
+      {
+        path: "pedido",
+        component: NewRequest,
+      },
+    ],
   },
   {
     path: "/login",
@@ -41,9 +48,9 @@ const routes = [
     component: Login,
   },
   {
-    path: "/register",
-    name: "Register",
-    component: Register,
+    path: "*",
+    name: "PNF",
+    component: NotFound,
   },
 ];
 

@@ -17,9 +17,9 @@
 </template>
 
 <script>
-import LoginCard from "@/components/LoginCard";
-import ForgotPass from "@/components/ForgotPass";
-import RegisterCard from "@/components/RegisterCard";
+import LoginCard from "@/components/Login/LoginCard";
+import ForgotPass from "@/components/Login/ForgotPass";
+import RegisterCard from "@/components/Login/RegisterCard";
 
 export default {
   components: {
@@ -64,23 +64,23 @@ export default {
 
 @keyframes rotateIn {
   0% {
-    opacity: 1;
-    transform: perspective(30cm) rotateY(90deg);
+    opacity: 0;
+    transform: perspective(50cm) rotateY(90deg);
   }
   100% {
     opacity: 1;
-    transform: perspective(30cm) rotateY(0deg);
+    transform: perspective(50cm) rotateY(0deg);
   }
 }
 
 @keyframes rotateOut {
   0% {
-    opacity: 1;
-    transform: perspective(30cm) rotateY(-90deg);
+    opacity: 0;
+    transform: perspective(50cm) rotateY(-90deg);
   }
   100% {
     opacity: 1;
-    transform: perspective(30cm) rotateY(0deg);
+    transform: perspective(50cm) rotateY(0deg);
   }
 }
 
