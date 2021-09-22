@@ -3,6 +3,7 @@
 const express = require("express");
 const MessageService = require("../services/MessageService");
 const router = express.Router();
+const auth = require("../middleware/auth");
 
 function validateEmail(email) {
   const re =
@@ -12,6 +13,10 @@ function validateEmail(email) {
 
 function validateEntries(val) {
   return val.trim().length > 0;
+}
+
+function sanitizeEntries(val) {
+  return val.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
 router.post("/", async (req, res) => {
@@ -27,9 +32,9 @@ router.post("/", async (req, res) => {
     return res.status(400).send({ msg: "Nome e/ou mensagem em branco." });
 
   const newMessage = {
-    content: content,
-    sentBy: name,
-    phone: phone,
+    content: sanitizeEntries(content),
+    sentBy: sanitizeEntries(name),
+    phone: sanitizeEntries(phone),
     email,
   };
 
@@ -38,13 +43,17 @@ router.post("/", async (req, res) => {
   res.status(response.statusCode).send({ msg: response.payload });
 });
 
-router.put("/:id", async (req, res) => {
-  const changes = {
-    repliedBy: req.body,
-  };
+router.get("/", auth(), async (req, res) => {
+  let response = await MessageService.FetchMessages();
+  res.status(response.statusCode).send({ msg: response.payload });
+});
+
+router.put("/:id", auth(), async (req, res) => {
+  const changes = req.body;
+
   const id = req.params.id;
 
-  if (!repliedBy) return res.status(400).send({ msg: "Dados incompletos" });
+  if (!changes) return res.status(400).send({ msg: "Sem alterações" });
 
   let response = await MessageService.EditMessage(id, changes);
 

@@ -1,11 +1,12 @@
 <template>
   <v-row class="d-flex justify-center color4 my-6">
-    <Card
-      :card="card"
+    <v-col
+      class="col-sm-12 col-md-4 col-lg-3"
       v-for="(card, index) in cards"
       :key="`card${index}`"
-      class="col-sm-12 col-md-4 col-lg-3"
-    />
+    >
+      <Card :card="card" />
+    </v-col>
   </v-row>
 </template>
 

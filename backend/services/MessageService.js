@@ -25,10 +25,24 @@ module.exports = class MessageService {
     }
   }
 
+  static async FetchMessages() {
+    try {
+      const messages = await Message.find();
+      return {
+        payload: messages,
+        statusCode: 201,
+      };
+    } catch (e) {
+      console.log("Erro em FetchMessages:", e);
+      return {
+        payload: "Falha na busca de mensagens",
+        statusCode: 400,
+      };
+    }
+  }
+
   static async EditMessage(id, changes) {
     try {
-      let userExists = await User.findById(changes.repliedBy);
-      if (!userExists) throw "Usuário não existe.";
       let response = await Message.updateOne({ _id: id }, changes);
       if (response.n === 1)
         return {

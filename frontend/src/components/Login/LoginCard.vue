@@ -102,9 +102,10 @@ export default {
       };
       axios
         .post("/auth/login", payload)
-        .then(() => {
+        .then((res) => {
           this.$root.vtoast.show({ message: "Login realizado com sucesso." });
-          this.$router.push("Dashboard");
+          let rota = res.data === "admin" ? "Dashboard" : "Cliente";
+          this.$router.push(rota);
         })
         .catch(() => {
           this.$root.vtoast.show({

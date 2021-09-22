@@ -3,8 +3,8 @@ import VueRouter from "vue-router";
 import store from "../store/index";
 import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
+import Cliente from "../views/Client.vue";
 import Dashboard from "../views/Dashboard.vue";
-import NewRequest from "@/components/Request/RequestForm";
 import NotFound from "../views/NotFound.vue";
 import axios from "axios";
 
@@ -17,9 +17,9 @@ const routes = [
     component: Home,
   },
   {
-    path: "/dashboard",
-    name: "Dashboard",
-    component: Dashboard,
+    path: "/cliente",
+    name: "Cliente",
+    component: Cliente,
     beforeEnter: (to, from, next) => {
       axios
         .get("auth/user")
@@ -35,12 +35,26 @@ const routes = [
           next({ name: "Login" });
         });
     },
-    children: [
-      {
-        path: "pedido",
-        component: NewRequest,
-      },
-    ],
+  },
+  {
+    path: "/dashboard",
+    name: "Dashboard",
+    component: Dashboard,
+    beforeEnter: (to, from, next) => {
+      axios
+        .get("auth/user")
+        .then((res) => {
+          if (res.data.acesso.includes("admin")) {
+            store.state.user = res.data;
+            next();
+          } else {
+            next({ name: "Login" });
+          }
+        })
+        .catch(() => {
+          next({ name: "Login" });
+        });
+    },
   },
   {
     path: "/login",

@@ -16,8 +16,11 @@ router.get(
   passport.authenticate("facebook", {
     failureRedirect: `${address}/login`,
     failureFlash: true,
-    successRedirect: `${address}/dashboard`,
-  })
+  }),
+  (req, res) => {
+    let rota = req.user.role === "admin" ? "dashboard" : "cliente";
+    res.redirect(`${address}/${rota}`);
+  }
 );
 
 // Google Login
@@ -34,8 +37,11 @@ router.get(
   passport.authenticate("google", {
     failureRedirect: `${address}/login`,
     failureFlash: true,
-    successRedirect: `${address}/dashboard`,
-  })
+  }),
+  (req, res) => {
+    let rota = req.user.role === "admin" ? "dashboard" : "cliente";
+    res.redirect(`${address}/${rota}`);
+  }
 );
 
 // Local Login
@@ -44,7 +50,7 @@ router.post("/login", function (req, res) {
     if (err) return res.status(400).send(err);
     req.login(user, function (fail) {
       if (fail) return res.status(400).send(fail);
-      res.status(200).send(user);
+      res.status(200).send(user.role);
     });
   })(req, res);
 });

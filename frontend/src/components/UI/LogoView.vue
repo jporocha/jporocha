@@ -9,7 +9,7 @@
           ></v-img>
         </v-col>
         <v-col
-          class="text-justify text-h5 black--text d-none d-md-flex cols-md-9"
+          class="text-right text-h5 black--text d-none d-md-flex cols-md-9"
         >
           Entregamos projetos inovadores com soluções personalizadas, simples e
           práticas, utilizando todo nosso conhecimento técnico e prático, além
@@ -17,9 +17,7 @@
         </v-col>
       </v-row>
     </v-parallax>
-    <v-col
-      class="text-justify text-h6 black--text d-flex d-md-none cols-sm-12 pt-4"
-    >
+    <v-col class="text-right text-subtitle-1 d-flex d-md-none cols-sm-12 pt-4">
       Entregamos projetos inovadores com soluções personalizadas, simples e
       práticas, utilizando todo nosso conhecimento técnico e prático, além dos
       melhores softwares e hardwares disponíveis no mercado.

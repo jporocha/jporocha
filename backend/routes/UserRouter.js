@@ -3,6 +3,7 @@
 const UserService = require("../services/UserService");
 const express = require("express");
 const router = express.Router();
+const auth = require("../middleware/auth");
 
 router.post("/createUser", async (req, res) => {
   const { name, email, password } = req.body;
@@ -37,6 +38,38 @@ router.post("/resetPassword", async (req, res) => {
     return res.status(400).send({ erro: "Dados incompletos" });
 
   let response = await UserService.ResetPassword(email, token, password);
+
+  res.status(response.statusCode).send(response.payload);
+});
+
+router.get("/", auth(), async (req, res) => {
+  let response = await UserService.FetchUsers();
+
+  res.status(response.statusCode).send(response.payload);
+});
+
+router.put("/:id", auth(), async (req, res) => {
+  let id = req.params.id;
+  let changes = req.body;
+
+  if (!changes)
+    return res.status(400).send("Não foram enviados parâmetros para edição.");
+
+  let response = await UserService.EditUser(id, changes);
+
+  res.status(response.statusCode).send(response.payload);
+});
+
+router.post("/adminUser", auth(), async (req, res) => {
+  let user = req.body;
+
+  if (!user.email)
+    return res.status(400).send("Defina um e-mail para o usuário.");
+
+  user.password = user.email;
+  user.localStrategy = true;
+
+  let response = await UserService.CreateUser(user);
 
   res.status(response.statusCode).send(response.payload);
 });

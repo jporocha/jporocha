@@ -5,10 +5,7 @@ let messageSchema = new mongoose.Schema({
   sentBy: { type: String, required: true },
   phone: { type: String },
   email: { type: String },
-  repliedBy: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-  },
+  read: { type: Boolean, default: false },
 });
 
 const model = mongoose.model("Message", messageSchema, "Message");

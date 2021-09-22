@@ -1,24 +1,30 @@
 <template>
   <div>
-    <div v-if="isLogged">
+    <div v-if="user">
       <v-menu bottom min-width="200px" rounded offset-y>
         <template v-slot:activator="{ on }">
           <v-btn icon x-large v-on="on">
             <v-avatar color="blue darken-4" size="30">
-              <span class="white--text text-h6">{{
-                isLogged.nome.charAt(0)
-              }}</span>
+              <span class="white--text text-h6">{{ user.nome.charAt(0) }}</span>
             </v-avatar>
           </v-btn>
         </template>
         <v-card>
           <v-list-item-content class="justify-center">
             <div class="mx-auto text-center">
-              <h4>{{ isLogged.nome }}</h4>
-              <v-divider class="my-3"></v-divider>
-              <v-btn small depressed rounded text @click="clientArea"
-                >Área do cliente</v-btn
-              >
+              <h4>{{ user.nome }}</h4>
+              <section v-if="user.acesso === 'admin'">
+                <v-divider class="my-3"></v-divider>
+                <v-btn small depressed rounded text @click="adminArea"
+                  >Área do administador</v-btn
+                >
+              </section>
+              <section v-else>
+                <v-divider class="my-3"></v-divider>
+                <v-btn small depressed rounded text @click="clientArea"
+                  >Área do cliente</v-btn
+                >
+              </section>
               <v-divider class="my-3"></v-divider>
               <v-btn small depressed rounded text @click="logOut">
                 Desconectar
@@ -36,7 +42,7 @@
 import axios from "axios";
 export default {
   computed: {
-    isLogged() {
+    user() {
       return this.$store.getters.getUser;
     },
   },
@@ -56,6 +62,9 @@ export default {
         });
     },
     clientArea() {
+      this.$router.push("/cliente");
+    },
+    adminArea() {
       this.$router.push("/dashboard");
     },
   },

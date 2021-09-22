@@ -20,6 +20,7 @@
             absolute
             color="color4 darken-2"
             opacity="0.8"
+            class="ma-n3"
           >
             <div class="mx-5 text-justify white--text">
               <span v-html="card.text"></span>

@@ -10,24 +10,54 @@ if (!pepper) {
   process.exit(1);
 }
 
+let AddressSchema = new mongoose.Schema({
+  nome: String,
+  rua: String,
+  numero: String,
+  complemento: String,
+  bairro: String,
+  cep: String,
+  cidade: String,
+  estado: String,
+  index: Number,
+});
+
+let ContactSchema = new mongoose.Schema({
+  nome: String,
+  position: String,
+  phone: String,
+  email: String,
+  index: Number,
+});
+
 let userSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: false, lowercase: true },
-  role: { type: Array, default: ["cliente"] },
-  address: [
-    {
-      name: String,
-      location: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Address",
-      },
-    },
-  ],
+  role: { type: String, default: "cliente" },
   passwordHash: { type: String, required: false },
   facebookId: { type: Number, required: false },
   googleId: { type: Number, required: false },
   localStrategy: { type: Boolean, default: false },
   refreshPassToken: { type: String },
+  cnpj: String,
+  inscricao: String,
+  razaoSocial: String,
+  addr: {
+    type: [AddressSchema],
+    default: [],
+  },
+  contatos: {
+    type: [ContactSchema],
+    default: [],
+  },
+  mainAddress: {
+    type: Number,
+    default: -1,
+  },
+  mainContact: {
+    type: Number,
+    default: -1,
+  },
 });
 
 // Para registro de estratégia local
@@ -41,7 +71,7 @@ userSchema.methods.createUser = async function (user) {
     delete user.password;
     let newUser = new mongoose.model("User")(user);
     await newUser.save();
-    return { user: newUser };
+    return { user: "Usuário criado com sucesso." };
   } catch (e) {
     return { error: e };
   }

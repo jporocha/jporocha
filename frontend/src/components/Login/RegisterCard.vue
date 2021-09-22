@@ -1,7 +1,9 @@
 <template>
   <v-card class="pa-2" width="300px">
-    <v-card-title class="d-flex justify-center"> Registre-se </v-card-title>
-    <v-divider></v-divider>
+    <v-card-title class="d-flex justify-center"
+      ><slot> Registre-se </slot></v-card-title
+    >
+    <v-divider class="mb-2"></v-divider>
     <v-card-text class="mb-n3">
       <v-alert
         v-model="erro"
@@ -55,6 +57,7 @@
           dense
           :rules="passwordCheckRules"
         ></v-text-field>
+        <slot name="password"></slot>
       </v-form>
     </v-card-text>
     <v-divider></v-divider>

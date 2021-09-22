@@ -73,4 +73,30 @@ module.exports = class UserService {
       };
     }
   }
+
+  static async FetchUsers() {
+    let users = await UserModel.find();
+    if (users.length)
+      return {
+        payload: users,
+        statusCode: 200,
+      };
+    return {
+      payload: "Falha ao buscar usuários",
+      statusCode: 400,
+    };
+  }
+
+  static async EditUser(id, changes) {
+    let users = await UserModel.findByIdAndUpdate(id, changes);
+    if (users)
+      return {
+        payload: "Alteração realizada com sucesso.",
+        statusCode: 200,
+      };
+    return {
+      payload: "Falha ao realizar alteração.",
+      statusCode: 400,
+    };
+  }
 };
