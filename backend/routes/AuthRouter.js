@@ -46,6 +46,9 @@ router.get(
 
 // Local Login
 router.post("/login", function (req, res) {
+  const { username, password } = req.body;
+  if (!username || !password)
+    return res.status(400).send("Dados de login inválidos");
   passport.authenticate("local", function (err, user) {
     if (err) return res.status(400).send(err);
     req.login(user, function (fail) {

@@ -120,17 +120,26 @@
     <v-dialog max-width="500" v-model="userDialog">
       <EditUser :key="userKey" :user="user" v-on:close="closeUser" />
     </v-dialog>
+    <v-dialog max-width="500" v-model="projectDialog">
+      <NewProject
+        :selectedUser="activeAction.owner"
+        :key="activeAction.owner"
+        v-on:close="closeProject"
+      />
+    </v-dialog>
   </v-card>
 </template>
 
 <script>
 import axios from "axios";
 import EditUser from "./EditUser.vue";
+import NewProject from "./Project.vue";
 
 export default {
   props: ["tipo"],
   components: {
     EditUser,
+    NewProject,
   },
   computed: {
     usersHeader() {
@@ -160,8 +169,11 @@ export default {
       cardTitle: "",
       cardText: "",
       dialog: false,
-      activeAction: "",
+      activeAction: {
+        owner: "",
+      },
       userDialog: false,
+      projectDialog: false,
       user: null,
       userKey: Math.random(),
     };
@@ -216,14 +228,16 @@ export default {
       this.cardTitle = "Criar novo projeto";
       this.cardText = `Criar novo projeto vinculado ao cliente ${item.name} (${item.email})?`;
       this.activeAction = {
-        method: "post",
         target: `/jobs`,
-        payload: {
-          owner: item._id,
-        },
+        owner: item._id,
       };
     },
     execAction() {
+      if (this.activeAction.target === "/jobs") {
+        this.dialog = false;
+        this.projectDialog = true;
+        return;
+      }
       axios[this.activeAction.method](
         `${this.activeAction.target}`,
         this.activeAction.payload
@@ -233,6 +247,7 @@ export default {
             color: "green",
             message: res.data,
           });
+          this.$emit("usersChanged");
           if (this.activeAction.user) {
             let index = this.users.findIndex(
               (el) => el._id === this.activeAction.user
@@ -248,10 +263,13 @@ export default {
           });
         });
     },
-    closeUser(ev) {
-      console.log(ev);
-      if (ev) this.fetchUsers();
+    closeUser(reload) {
+      if (reload) this.fetchUsers();
       this.userDialog = false;
+    },
+    closeProject(reload) {
+      if (reload) this.$emit("FetchProjects");
+      this.projectDialog = false;
     },
     editUser(user) {
       this.user = user;

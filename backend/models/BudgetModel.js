@@ -1,17 +1,27 @@
 const mongoose = require("mongoose");
 
-let jobSchema = new mongoose.Schema({
-  address: { type: mongoose.Schema.Types.ObjectId, ref: "Address" },
-  jobDescription: { type: String, required: true },
-  jobValue: { type: Number, required: true },
+let fileSchema = new mongoose.Schema({
+  filename: String,
+  validade: String,
+  key: String,
+  mimetype: String,
 });
 
 let budgetSchema = new mongoose.Schema({
-  madeBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-  madeFor: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-  jobs: { type: [jobSchema], default: [] },
+  profissionalHabilitado: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  client: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  tipoProjeto: String,
+  contrato: String,
+  anexos: {
+    type: [fileSchema],
+    default: [],
+  },
+  bucketCounter: {
+    type: Number,
+    default: 0,
+  },
 });
 
-const model = mongoose.model("User", userSchema, "Users");
+const model = mongoose.model("Job", budgetSchema, "Jobs");
 
 module.exports = model;

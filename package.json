@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/jporocha/jporocha#readme",
   "dependencies": {
+    "aws-sdk": "^2.997.0",
     "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
     "compression": "^1.7.4",
@@ -35,6 +36,7 @@
     "helmet": "^4.4.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.12.2",
+    "multer": "^1.4.3",
     "nodemailer": "^6.6.3",
     "passport": "^0.4.1",
     "passport-facebook": "^3.0.0",

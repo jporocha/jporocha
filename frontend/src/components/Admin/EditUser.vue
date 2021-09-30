@@ -53,7 +53,7 @@
           ></v-select>
           <section v-if="selectedAddr">
             <v-row>
-              <v-col class="mb-n4 pb-0 col-9"
+              <v-col class="mb-n4 pb-0 col-8"
                 ><v-text-field
                   outlined
                   dense
@@ -61,12 +61,17 @@
                   v-model="selectedAddr.nome"
                 ></v-text-field
               ></v-col>
-              <v-col class="mb-n4 pb-0 col-3">
+              <v-col class="mb-n4 pb-0 col-2">
                 <v-btn icon @click="mainAddress">
                   <v-icon
                     :color="addrIndex === client.mainAddress ? 'red' : 'blue'"
                     >mdi-star-outline</v-icon
                   >
+                </v-btn>
+              </v-col>
+              <v-col class="mb-n4 pb-0 col-2">
+                <v-btn icon @click="removeAddress">
+                  <v-icon color="orange">mdi-trash-can</v-icon>
                 </v-btn>
               </v-col>
               <v-col class="mb-n4 pb-0 col-12"
@@ -144,7 +149,7 @@
           ></v-select>
           <section v-if="selectedContact">
             <v-row>
-              <v-col class="mb-n4 pb-0 col-9"
+              <v-col class="mb-n4 pb-0 col-8"
                 ><v-text-field
                   outlined
                   dense
@@ -152,7 +157,7 @@
                   v-model="selectedContact.nome"
                 ></v-text-field
               ></v-col>
-              <v-col class="mb-n4 pb-0 col-3">
+              <v-col class="mb-n4 pb-0 col-2">
                 <v-btn icon @click="mainContact">
                   <v-icon
                     :color="
@@ -160,6 +165,11 @@
                     "
                     >mdi-star-outline</v-icon
                   >
+                </v-btn>
+              </v-col>
+              <v-col class="mb-n4 pb-0 col-2">
+                <v-btn icon @click="removeContact">
+                  <v-icon color="orange">mdi-trash-can</v-icon>
                 </v-btn>
               </v-col>
               <v-col class="mb-n4 pb-0 col-12"
@@ -197,6 +207,20 @@
         </v-form>
       </v-card-text>
     </v-card>
+    <v-dialog max-width="500" v-model="dialog">
+      <v-card>
+        <v-card-title>{{ cardTitle }}</v-card-title>
+        <v-card-text class="text-justify">{{ cardText }}</v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions
+          ><v-btn small color="red" @click="dialog = false">Cancelar</v-btn
+          ><v-spacer></v-spacer
+          ><v-btn small color="green" @click="execAction"
+            >Confirmar</v-btn
+          ></v-card-actions
+        >
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -220,6 +244,10 @@ export default {
         addr: [],
         contatos: [],
       },
+      dialog: false,
+      cardTitle: "",
+      cardText: "",
+      action: "",
     };
   },
   methods: {
@@ -251,6 +279,31 @@ export default {
     },
     mainAddress() {
       this.client.mainAddress = this.addrIndex;
+    },
+    removeAddress() {
+      this.cardTitle = "Remover endereço?";
+      this.cardText =
+        "Tem certeza que deseja remover o endereço atual do cadastro?";
+      this.action = "removeAddr";
+      this.dialog = true;
+    },
+    removeContact(ev) {
+      this.cardTitle = "Remover contato?";
+      this.cardText =
+        "Tem certeza que deseja remover o contato atual do cadastro?";
+      this.action = "removeContact";
+      this.dialog = true;
+    },
+    execAction() {
+      if (this.action === "removeContact") {
+        this.client.contatos.splice(this.contactIndex, 1);
+        if (this.client.contatos.length)
+          this.selectedContact = this.client.contatos[0];
+      } else {
+        this.client.addr.splice(this.addrIndex, 1);
+        if (this.client.addr.length) this.selectedAddr = this.client.addr[0];
+      }
+      this.dialog = false;
     },
     saveUser() {
       let method = this.client._id ? "put" : "post";

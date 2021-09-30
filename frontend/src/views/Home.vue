@@ -1,6 +1,7 @@
 <template>
   <div>
     <LogoView />
+    <QuemSomos class="mb-7" />
     <Cards :cards="cardContent" />
     <Servicos />
     <v-divider class="mx-4 mb-4"></v-divider>
@@ -12,6 +13,7 @@
 <script>
 import Cards from "@/components/UI/Cards.vue";
 import LogoView from "@/components/UI/LogoView.vue";
+import QuemSomos from "@/components/UI/QuemSomos.vue";
 import FaleConosco from "@/components/UI/FaleConosco.vue";
 import Servicos from "@/components/UI/Servicos.vue";
 import Footer from "@/components/UI/Footer";
@@ -20,6 +22,7 @@ export default {
   components: {
     LogoView,
     Cards,
+    QuemSomos,
     Servicos,
     FaleConosco,
     Footer,
@@ -50,3 +53,6 @@ export default {
   },
 };
 </script>
+
+<style>
+</style>
